@@ -1,0 +1,204 @@
+/* ===== Flower By Price Section ===== */
+.flower-by-price {
+  padding: 3rem 1rem;
+  background: #fafafa;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 2.5rem;
+}
+
+/* Cards Container */
+.price-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Card Wrapper */
+.price-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.price-card-wrapper:hover {
+  transform: translateY(-10px);
+}
+
+/* Arch Shape */
+.arch-card {
+  width: 220px;
+  height: 300px;
+  background: linear-gradient(160deg, #def0fb 0%, #c5e5f7 100%);
+  border-radius: 120px 120px 20px 20px;
+  border: 2px solid #a8d8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(100, 180, 230, 0.2);
+  transition: all 0.3s ease;
+}
+
+.arch-card:hover {
+  box-shadow: 0 10px 30px rgba(100, 180, 230, 0.45);
+  border-color: #5bafd6;
+  background: linear-gradient(160deg, #c5e5f7 0%, #a8d8f0 100%);
+}
+
+/* Sparkles */
+.sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  color: #7ec8e3;
+  font-size: 13px;
+  opacity: 0.7;
+  animation: twinkle 2.5s ease-in-out infinite alternate;
+}
+
+.sparkle.top-left {
+  top: 18%;
+  left: 14%;
+  animation-delay: 0s;
+}
+
+.sparkle.top-right {
+  top: 18%;
+  right: 14%;
+  animation-delay: 0.6s;
+}
+
+.sparkle.bottom-left {
+  bottom: 22%;
+  left: 10%;
+  animation-delay: 1.2s;
+}
+
+.sparkle.bottom-right {
+  bottom: 22%;
+  right: 10%;
+  animation-delay: 1.8s;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.8) rotate(0deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.3) rotate(20deg);
+  }
+}
+
+/* Price Text */
+.price-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.under-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a5276;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.amount-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.rupee-symbol {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #154360;
+  margin-top: 8px;
+}
+
+.price-number {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #154360;
+  line-height: 1;
+  letter-spacing: -2px;
+  text-shadow:
+    2px 2px 0px #85c1e9,
+    4px 4px 10px rgba(21, 67, 96, 0.25);
+}
+
+/* Label */
+.card-label {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .arch-card {
+    width: 180px;
+    height: 250px;
+  }
+
+  .price-number {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .price-cards-container {
+    gap: 0.8rem;
+  }
+
+  .arch-card {
+    width: 150px;
+    height: 210px;
+  }
+
+  .price-number {
+    font-size: 2.5rem;
+  }
+
+  .under-text {
+    font-size: 1rem;
+  }
+
+  .rupee-symbol {
+    font-size: 1.2rem;
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 420px) {
+  .arch-card {
+    width: 130px;
+    height: 185px;
+  }
+
+  .price-number {
+    font-size: 2rem;
+  }
+}
