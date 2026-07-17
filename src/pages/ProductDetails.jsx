@@ -40,14 +40,17 @@ const ProductDetails = () => {
   const images = product.images || [];
   const productUrl = window.location.href;
   const shareText = `Check out ${product.name} on Bloom & Belle`;
+  const outOfStock = !product.stock || product.stock <= 0;
 
   const handleAddToCart = () => {
+    if (outOfStock) return;
     addToCart(product, size || null, qty);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
 
   const handleBuyNow = () => {
+    if (outOfStock) return;
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/auth");
@@ -147,7 +150,7 @@ const ProductDetails = () => {
                 type="button"
                 className="qty-btn"
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
-                disabled={qty <= 1}
+                disabled={qty <= 1 || outOfStock}
                 aria-label="Decrease quantity"
               >
                 −
@@ -157,7 +160,7 @@ const ProductDetails = () => {
                 type="button"
                 className="qty-btn"
                 onClick={() => setQty((q) => Math.min(product.stock, q + 1))}
-                disabled={qty >= product.stock}
+                disabled={outOfStock || qty >= product.stock}
                 aria-label="Increase quantity"
               >
                 +
@@ -165,17 +168,13 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <p className="stock-note">{product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}</p>
+          <p className="stock-note">{!outOfStock ? `${product.stock} in stock` : "Out of stock"}</p>
 
           <div className="pd-actions">
-            <button onClick={handleAddToCart} disabled={product.stock === 0} className="btn-primary">
+            <button onClick={handleAddToCart} disabled={outOfStock} className="btn-primary">
               {added ? "Added ✓" : "Add to Cart"}
             </button>
-            <button
-              onClick={handleBuyNow}
-              disabled={product.stock === 0}
-              className="btn-secondary"
-            >
+            <button onClick={handleBuyNow} disabled={outOfStock} className="btn-secondary">
               Buy Now
             </button>
           </div>
