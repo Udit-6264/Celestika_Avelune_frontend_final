@@ -47,6 +47,16 @@ const ProductDetails = () => {
     setTimeout(() => setAdded(false), 2000);
   };
 
+  const handleBuyNow = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/auth");
+      return;
+    }
+    handleAddToCart();
+    navigate("/cart");
+  };
+
   const prevImage = () => setActiveImage((i) => (i === 0 ? images.length - 1 : i - 1));
   const nextImage = () => setActiveImage((i) => (i === images.length - 1 ? 0 : i + 1));
 
@@ -162,10 +172,7 @@ const ProductDetails = () => {
               {added ? "Added ✓" : "Add to Cart"}
             </button>
             <button
-              onClick={() => {
-                handleAddToCart();
-                navigate("/cart");
-              }}
+              onClick={handleBuyNow}
               disabled={product.stock === 0}
               className="btn-secondary"
             >
