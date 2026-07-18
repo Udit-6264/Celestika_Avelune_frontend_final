@@ -115,7 +115,7 @@ const TrackOrder = () => {
     return matches.length > 0 ? matches[matches.length - 1] : null;
   };
 
-  // हेल्पर फंक्शन: चेक करेगा कि रिटर्न पीरियड वैलिड है या एक्सपायर हो चुका है
+  // 💡 हेल्पर फंक्शन: चेक करेगा कि रिटर्न पीरियड वैलिड है या एक्सपायर हो चुका है
   const checkReturnWindowValidity = (deliveredAt, policy) => {
     if (!deliveredAt || !policy) return { valid: false, message: "" };
 
@@ -141,7 +141,10 @@ const TrackOrder = () => {
   if (!order) return <p className="page-container">Loading...</p>;
 
   const currentStepIndex = steps.indexOf(order.orderStatus);
-  const isCancellable = ["Placed", "Processing"].includes(order.orderStatus);
+
+  const isCancellable =
+    order.paymentMethod === "COD" &&
+    ["Placed", "Processing"].includes(order.orderStatus);
 
   return (
     <div className="page-container">
