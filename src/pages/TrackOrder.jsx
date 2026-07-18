@@ -16,6 +16,7 @@ const TrackOrder = () => {
   const [order, setOrder] = useState(null);
   const [error, setError] = useState("");
   const [downloading, setDownloading] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
 
   // Return / Exchange modal state
   const [modalItem, setModalItem] = useState(null);
@@ -52,6 +53,19 @@ const TrackOrder = () => {
       alert("Could not download invoice. Please try again.");
     } finally {
       setDownloading(false);
+    }
+  };
+
+  const handleCancelOrder = async () => {
+    if (!window.confirm("Are you sure you want to cancel this order?")) return;
+    setCancelling(true);
+    try {
+      await api.post(`/orders/${id}/cancel`);
+      loadOrder();
+    } catch (err) {
+      alert(err.response?.data?.message || "Could not cancel order");
+    } finally {
+      setCancelling(false);
     }
   };
 
@@ -101,24 +115,21 @@ const TrackOrder = () => {
     return matches.length > 0 ? matches[matches.length - 1] : null;
   };
 
-  // 💡 हेल्पर फंक्शन: चेक करेगा कि रिटर्न पीरियड वैलिड है या एक्सपायर हो चुका है
+  // हेल्पर फंक्शन: चेक करेगा कि रिटर्न पीरियड वैलिड है या एक्सपायर हो चुका है
   const checkReturnWindowValidity = (deliveredAt, policy) => {
     if (!deliveredAt || !policy) return { valid: false, message: "" };
 
     const deliveryDate = new Date(deliveredAt);
     const currentDate = new Date();
 
-    // अधिकतम कितने दिन दिए गए हैं (अगर रिटर्न और एक्सचेंज दोनों हैं, तो जो भी ज़्यादा दिन हों)
     const allowedDays = Math.max(
       policy.isReturnable ? (policy.returnDays || 0) : 0,
       policy.isExchangeable ? (policy.exchangeDays || 0) : 0
     );
 
-    // आखिरी तारीख निकालें (Delivery Date + Allowed Days)
     const expiryDate = new Date(deliveryDate);
     expiryDate.setDate(expiryDate.getDate() + allowedDays);
 
-    // अगर आज की तारीख आखिरी तारीख से ज़्यादा है, तो टाइम ख़त्म!
     if (currentDate > expiryDate) {
       return { valid: false, message: "Return/Exchange window expired" };
     }
@@ -130,6 +141,7 @@ const TrackOrder = () => {
   if (!order) return <p className="page-container">Loading...</p>;
 
   const currentStepIndex = steps.indexOf(order.orderStatus);
+  const isCancellable = ["Placed", "Processing"].includes(order.orderStatus);
 
   return (
     <div className="page-container">
@@ -149,6 +161,28 @@ const TrackOrder = () => {
               <p>{step}</p>
             </div>
           ))}
+        </div>
+      )}
+
+      {isCancellable && (
+        <div style={{ marginTop: "15px" }}>
+          <button
+            type="button"
+            className="cancel-order-btn"
+            onClick={handleCancelOrder}
+            disabled={cancelling}
+            style={{
+              padding: "10px 20px",
+              background: "#fff",
+              color: "#d63384",
+              border: "1px solid #d63384",
+              borderRadius: "6px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            {cancelling ? "Cancelling..." : "Cancel Order"}
+          </button>
         </div>
       )}
 
@@ -189,7 +223,6 @@ const TrackOrder = () => {
               <>
                 <span className="delivered-status">✅ Delivered </span>
                 {order.deliveredAt && (
-
                   <span className="delivered-date">
                     {new Date(order.deliveredAt).toLocaleDateString("en-IN", {
                       weekday: "long",
@@ -244,7 +277,6 @@ const TrackOrder = () => {
           const policy = item.product?.returnPolicy;
           const isEligible = policy?.isReturnable || policy?.isExchangeable;
 
-          // 💡 टाइम विंडो की वैलिडिटी चेक करें
           const windowCheck = checkReturnWindowValidity(order.deliveredAt, policy);
 
           return (
@@ -261,7 +293,6 @@ const TrackOrder = () => {
                         {request.type} {request.status}
                       </span>
                     ) : isEligible && windowCheck.valid ? (
-                      // ✅ केवल तभी बटन दिखेगा जब पॉलिसी उपलब्ध हो और टाइम समाप्त न हुआ हो
                       <button
                         type="button"
                         className="request-return-btn"
@@ -270,7 +301,6 @@ const TrackOrder = () => {
                         Request Return / Exchange
                       </button>
                     ) : (
-                      // 🚫 अगर पॉलिसी नहीं है या समय सीमा खत्म हो गई है, तो ये टेक्स्ट दिखेगा
                       <span className="text-muted" style={{ fontSize: "13px", color: "#888" }}>
                         {!isEligible ? "Return/Exchange not available" : windowCheck.message}
                       </span>
