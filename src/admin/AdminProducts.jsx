@@ -12,10 +12,10 @@ const emptyForm = {
   stock: "",
   isFeatured: false,
   codAvailable: false,
-  isReturnable: true,
-  returnDays: 7,
-  isExchangeable: true,
-  exchangeDays: 7,
+  isReturnable: false,
+  returnDays: 5,
+  isExchangeable: false,
+  exchangeDays: 5,
   returnPolicyNote: "",
 };
 
@@ -176,7 +176,7 @@ const AdminProducts = () => {
       stock: p.stock,
       isFeatured: p.isFeatured,
       codAvailable: p.codAvailable || false,
-      isReturnable: p.returnPolicy?.isReturnable ?? true,
+      isReturnable: p.returnPolicy?.isReturnable ?? false,
       returnDays: p.returnPolicy?.returnDays ?? 7,
       isExchangeable: p.returnPolicy?.isExchangeable ?? true,
       exchangeDays: p.returnPolicy?.exchangeDays ?? 7,
