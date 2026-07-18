@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 import { ProtectedRoute, AdminRoute } from "./components/ProtectedRoute.jsx";
 
@@ -25,9 +26,11 @@ import AdminOrderDetails from "./admin/AdminOrderDetails.jsx";
 import AdminPincodes from "./admin/AdminPincodes.jsx";
 import AdminSettings from "./admin/AdminSettings.jsx";
 import AdminCoupons from "./admin/AdminCoupons.jsx";
+
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <div className="app-body">
         <Routes>
