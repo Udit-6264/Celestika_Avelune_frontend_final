@@ -301,7 +301,7 @@ const TrackOrder = () => {
                         className="request-return-btn"
                         onClick={() => openRequestModal(item)}
                       >
-                        Request Return / Exchange
+                        Request  Exchange
                       </button>
                     ) : (
                       <span className="text-muted" style={{ fontSize: "13px", color: "#888" }}>
