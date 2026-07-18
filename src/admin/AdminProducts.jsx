@@ -271,8 +271,8 @@ const AdminProducts = () => {
         </div>
 
         <div className="return-policy-section">
-          <label>Return / Exchange Policy:</label>
-
+          <label> Exchange Policy:</label>
+          {/* 
           <div className="return-policy-row">
             <label className="checkbox-label">
               <input
@@ -292,7 +292,7 @@ const AdminProducts = () => {
                 onChange={(e) => setForm({ ...form, returnDays: e.target.value })}
               />
             )}
-          </div>
+          </div> */}
 
           <div className="return-policy-row">
             <label className="checkbox-label">
@@ -392,7 +392,7 @@ const AdminProducts = () => {
           ))}
         </tbody>
       </table>
-    </div>
+    </div >
   );
 };
 
