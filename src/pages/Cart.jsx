@@ -28,7 +28,7 @@ const Cart = () => {
 
   const handleCheckout = () => {
     if (!user) {
-      navigate("/login");
+      navigate("/auth", { state: { message: "Please login first to continue checkout" } });
       return;
     }
     navigate("/checkout");

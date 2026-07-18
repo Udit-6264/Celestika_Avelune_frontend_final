@@ -50,7 +50,7 @@ const Footer = () => (
     <div className="footer-v2-bottom">
       <p>© {new Date().getFullYear()} Celestika Avelune. All rights reserved.</p>
       <p className="footer-v2-credit">
-        Designed &amp; Developed with ❤️ cdby <span>Udit Rawat</span>
+        Designed &amp; Developed with ❤️ by <span>Udit Rawat</span>
       </p>
     </div>
   </footer>
