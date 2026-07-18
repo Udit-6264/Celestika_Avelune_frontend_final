@@ -272,7 +272,7 @@ const AdminProducts = () => {
 
         <div className="return-policy-section">
           <label> Exchange Policy:</label>
-          {/* 
+
           <div className="return-policy-row">
             <label className="checkbox-label">
               <input
@@ -292,7 +292,7 @@ const AdminProducts = () => {
                 onChange={(e) => setForm({ ...form, returnDays: e.target.value })}
               />
             )}
-          </div> */}
+          </div>
 
           <div className="return-policy-row">
             <label className="checkbox-label">
@@ -326,13 +326,15 @@ const AdminProducts = () => {
 
         <label className="upload-label">Upload Product Images:</label>
 
-        {existingImages.length > 0 && (
-          <div className="existing-images-row">
-            {existingImages.map((img, i) => (
-              <img key={i} src={img} alt={`Current ${i + 1}`} className="admin-thumb" />
-            ))}
-          </div>
-        )}
+        {
+          existingImages.length > 0 && (
+            <div className="existing-images-row">
+              {existingImages.map((img, i) => (
+                <img key={i} src={img} alt={`Current ${i + 1}`} className="admin-thumb" />
+              ))}
+            </div>
+          )
+        }
 
         <input
           type="file"
@@ -342,13 +344,15 @@ const AdminProducts = () => {
           onChange={handleImageSelect}
         />
 
-        {newImagePreviews.length > 0 && (
-          <div className="existing-images-row">
-            {newImagePreviews.map((src, i) => (
-              <img key={i} src={src} alt={`New ${i + 1}`} className="admin-thumb" />
-            ))}
-          </div>
-        )}
+        {
+          newImagePreviews.length > 0 && (
+            <div className="existing-images-row">
+              {newImagePreviews.map((src, i) => (
+                <img key={i} src={src} alt={`New ${i + 1}`} className="admin-thumb" />
+              ))}
+            </div>
+          )
+        }
 
         <div className="form-actions">
           <button type="submit" disabled={saving}>
@@ -356,7 +360,7 @@ const AdminProducts = () => {
           </button>
           {editingId && <button type="button" onClick={resetForm}>Cancel</button>}
         </div>
-      </form>
+      </form >
 
       <h3>All Products ({products.length})</h3>
       <table className="admin-table">
