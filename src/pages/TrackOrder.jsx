@@ -336,7 +336,7 @@ const TrackOrder = () => {
       {modalItem && (
         <div className="return-modal-backdrop" onClick={closeModal}>
           <div className="return-modal" onClick={(e) => e.stopPropagation()}>
-            <h3>Request Return / Exchange</h3>
+            <h3>Request Exchange</h3>
             <p className="return-modal-item">{modalItem.name}</p>
 
             {requestError && <p className="error-text">{requestError}</p>}
