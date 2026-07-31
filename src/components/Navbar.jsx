@@ -5,6 +5,9 @@ import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 
+// 🖼️ Import your logo image here (path according to your project structure)
+import logoImg from "../assets/slider/logo.jpg";
+
 import {
   FiShoppingCart,
   FiUser,
@@ -79,44 +82,26 @@ const Navbar = () => {
         <FiMenu size={24} />
       </button>
 
-      {/* Logo */}
-
+      {/* Logo with Image */}
       <Link to="/" className="logo">
-        🌸 Celestika Avelune
+        <img src={logoImg} alt="Celestika Avelune" className="logo-img" />
+        <span>Celestika Avelune</span>
       </Link>
 
       {/* Navigation — desktop only */}
-
       <div className="nav-links">
         <Link to="/">Home</Link>
+        <Link to="/products?category=flowers">Flowers</Link>
+        <Link to="/products?category=women-clothing">Women</Link>
+        <Link to="/products?category=girls-clothing">Girls</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </div>
 
-        <Link to="/products?category=flowers">
-          Flowers
-        </Link>
-
-        <Link to="/products?category=women-clothing">
-          Women
-        </Link>
-
-        <Link to="/products?category=girls-clothing">
-          Girls
-        </Link>
-
-        <Link to="/about">
-          About
-        </Link>
-
-        <Link to="/contact">
-          Contact
-        </Link>
-      </div>      {/* ================= Desktop Search ================= */}
-
+      {/* ================= Desktop Search ================= */}
       <div className="desktop-search">
-
         <div className="search-container">
-
           <div className="search-box">
-
             <input
               type="text"
               placeholder="Search flowers, gifts..."
@@ -124,25 +109,15 @@ const Navbar = () => {
               onFocus={() => setShow(true)}
               onChange={(e) => setSearch(e.target.value)}
             />
-
             <FiSearch size={18} />
-
           </div>
 
           {show && search && (
-
             <div className="search-dropdown">
-
               {results.length === 0 ? (
-
-                <div className="search-empty">
-                  No Products Found
-                </div>
-
+                <div className="search-empty">No Products Found</div>
               ) : (
-
                 results.map((item) => (
-
                   <Link
                     key={item._id}
                     to={`/product/${item._id}`}
@@ -152,53 +127,33 @@ const Navbar = () => {
                       setShow(false);
                     }}
                   >
-
                     <img
                       src={item.images?.[0]}
                       alt={item.name}
                     />
-
                     <div className="search-details">
-
                       <h4>{item.name}</h4>
-
-                      <p>
-                        ₹{item.discountPrice || item.price}
-                      </p>
-
+                      <p>₹{item.discountPrice || item.price}</p>
                     </div>
-
                   </Link>
-
                 ))
-
               )}
-
             </div>
-
           )}
-
         </div>
-
       </div>
 
       {/* ================= Mobile Search Icon ================= */}
-
       <div
         className="mobile-search-icon"
         onClick={() => setMobileSearch(true)}
       >
-
         <FiSearch size={22} />
-
       </div>
 
       {/* ================= Mobile Full-Screen Search ================= */}
-
       {mobileSearch && (
-
         <div className="mobile-search-overlay">
-
           <div className="mobile-search-overlay-header">
             <div className="search-box">
               <input
@@ -248,62 +203,34 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-
         </div>
-
       )}
 
       {/* ================= Actions ================= */}
-
       <div className="nav-actions">
-
         {/* Cart — always visible */}
-
-        <Link
-          to="/cart"
-          className="icon-btn cart-link"
-        >
-
+        <Link to="/cart" className="icon-btn cart-link">
           <FiShoppingCart size={22} />
-
           {cartItems.length > 0 && (
-            <span className="badge">
-              {cartItems.length}
-            </span>
+            <span className="badge">{cartItems.length}</span>
           )}
-
         </Link>
 
-        {/* Orders / Profile / Admin / Logout — desktop only, moved into hamburger menu on mobile */}
+        {/* Account actions — desktop only */}
         <div className="desktop-account-actions">
           {user ? (
             <>
-              <Link
-                to="/orders"
-                className="icon-btn"
-                title="Orders"
-              >
+              <Link to="/orders" className="icon-btn" title="Orders">
                 <FiPackage size={22} />
               </Link>
-
-              <Link
-                to="/profile"
-                className="icon-btn"
-                title={user.name}
-              >
+              <Link to="/profile" className="icon-btn" title={user.name}>
                 <FiUser size={22} />
               </Link>
-
               {user.role === "admin" && (
-                <Link
-                  to="/admin"
-                  className="icon-btn"
-                  title="Admin"
-                >
+                <Link to="/admin" className="icon-btn" title="Admin">
                   <MdAdminPanelSettings size={24} />
                 </Link>
               )}
-
               <button
                 className="icon-btn logout-btn"
                 onClick={() => {
@@ -315,26 +242,23 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <Link
-              to="/auth"
-              className="icon-btn"
-              title="Login"
-            >
+            <Link to="/auth" className="icon-btn" title="Login">
               <FiUser size={22} />
             </Link>
           )}
         </div>
-
       </div>
 
       {/* ================= Mobile Slide-in Menu ================= */}
-
       {mobileMenuOpen && (
         <>
           <div className="mobile-menu-backdrop" onClick={closeMobileMenu} />
           <div className="mobile-menu-drawer">
             <div className="mobile-menu-header">
-              <span className="logo">🌸 Celestika Avelune</span>
+              <div className="logo">
+                <img src={logoImg} alt="Celestika Avelune" className="logo-img" />
+                <span>Celestika Avelune</span>
+              </div>
               <button
                 className="mobile-menu-close"
                 onClick={closeMobileMenu}

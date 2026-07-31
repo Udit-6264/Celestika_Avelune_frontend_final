@@ -4947,3 +4947,71 @@ ul {
 /* ======================================================== */
 /* 📱 MOBILE BANNER WIDTH & SPACING FIX                     */
 /* ======================================================== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  color: #333;
+}
+
+.logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+/* ======================================================== */
+/* 📱 MOBILE NAVBAR LOGO TEXT FIX                            */
+/* ======================================================== */
+@media (max-width: 768px) {
+
+  /* Logo text ka size thoda chhota karne aur wrap rokne ke liye */
+  .logo {
+    font-size: 14px !important;
+    /* Size thoda chhota kiya */
+    white-space: nowrap !important;
+    /* Text line break na ho */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    /* Agar jagah fir bhi kam pade to cleanly fit ho */
+    max-width: 180px !important;
+    /* Navbar me max space limit */
+    gap: 5px !important;
+  }
+
+  .logo-img {
+    width: 24px !important;
+    /* Logo image size adjust */
+    height: 24px !important;
+    flex-shrink: 0 !important;
+    /* Image squeeze na ho */
+  }
+
+  /* Navbar items ke beech gap thoda kam karne ke liye */
+  .navbar {
+    padding: 10px 8px !important;
+    gap: 6px !important;
+  }
+}
+
+/* Navbar Brand Name Styling - Banner Matching Font */
+.logo span,
+.logo-text {
+  font-family: 'Bodoni Moda', 'Playfair Display', Georgia, serif !important;
+  font-weight: 600 !important;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+  color: #111111;
+  text-transform: none;
+}
+
+/* Mobile responsive font size */
+@media (max-width: 768px) {
+
+  .logo span,
+  .logo-text {
+    font-size: 16px !important;
+  }
+}
