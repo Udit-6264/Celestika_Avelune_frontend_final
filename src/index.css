@@ -1080,11 +1080,16 @@ ul {
 /* ======================================================== */
 /* 🖼️ SINGLE PRODUCT DISPLAY GALLERY */
 /* ======================================================== */
+/* ======================================================== */
+/* 🖼️ SINGLE PRODUCT DISPLAY GALLERY                        */
+/* ======================================================== */
 .product-details {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(20px, 4vw, 40px);
   align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pd-gallery {
@@ -1109,7 +1114,7 @@ ul {
   overflow: hidden;
   background: none;
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
   flex-shrink: 0;
 }
 
@@ -1131,7 +1136,7 @@ ul {
   border-radius: 14px;
   overflow: hidden;
   background: #f7f7f7;
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
 }
 
 .pd-main-image img {
@@ -1175,12 +1180,17 @@ ul {
 
 .pd-info {
   flex: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.pd-desc {
-  margin: 12px 0;
-  color: #555;
-  line-height: 1.6;
+.pd-desc,
+.pd-info p,
+.pd-info h2 {
+  width: 100%;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .size-select,
@@ -1189,6 +1199,7 @@ ul {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .size-btn {
@@ -1241,66 +1252,76 @@ ul {
   border: 1px solid var(--primary);
 }
 
-/* ---------- Responsive: Tablet & Mobile ---------- */
-/* ======================================================== */
-/* 📱 MOBILE PRODUCT DETAILS GALLERY FIX                     */
-/* ======================================================== */
-
+/* ---------- Responsive Fixes for Mobile & Tablet ---------- */
 @media (max-width: 768px) {
-
-  /* Stack image and info vertically */
   .product-details {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr !important;
+    padding: 0 16px !important;
+    gap: 16px !important;
+    box-sizing: border-box !important;
   }
 
-  /* Main image on top, thumbnails directly below */
+  /* Force Main image FIRST, Thumbnails SECOND */
   .pd-gallery {
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 12px !important;
   }
 
-  /* Make main image full-width responsive box */
-  .pd-main-image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 12px;
-    overflow: hidden;
+  @media (max-width: 768px) {
+
+    /* Container ko screen ki poori width do */
+    .pd-gallery {
+      width: 100% !important;
+      padding: 0 !important;
+    }
+
+    .pd-main-image {
+      order: 1 !important;
+      width: 100% !important;
+      height: 420px !important;
+      /* Image container bada hoga */
+      max-height: 450px !important;
+      border-radius: 18px !important;
+      overflow: hidden !important;
+      background: transparent !important;
+    }
+
+    .pd-main-image img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      /* Cover se photo fill hoke badi dikhegi */
+      object-position: center !important;
+      border-radius: 18px !important;
+      display: block !important;
+    }
   }
 
-  .pd-main-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Change to 'contain' if full photo must be visible without crop */
-  }
-
-  /* Horizontal scrollable row for thumbnails */
   .pd-thumbs {
-    flex-direction: row;
-    width: 100%;
-    overflow-x: auto;
-    gap: 10px;
-    padding-bottom: 4px;
-    /* Optional: hide scrollbars while keeping touch scroll */
+    order: 2 !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    gap: 10px !important;
+    padding-bottom: 6px !important;
     scrollbar-width: none;
-    /* Firefox */
   }
 
   .pd-thumbs::-webkit-scrollbar {
     display: none;
-    /* Chrome / Safari / Edge */
   }
 
   .pd-thumb {
-    width: 60px;
-    height: 60px;
-    min-width: 60px;
-    /* Prevents thumbnails from squishing */
-    aspect-ratio: 1 / 1;
-    border-radius: 8px;
-    flex-shrink: 0;
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  .pd-info {
+    order: 3 !important;
+    width: 100% !important;
   }
 }
 
@@ -4552,5 +4573,126 @@ ul {
   .slider {
     aspect-ratio: 1 / 1;
     max-height: 45vh;
+  }
+}
+
+/* ======================================================== */
+/* 📱 PRODUCT DETAILS SECTION ONLY - OVERFLOW & CROP FIX    */
+/* ======================================================== */
+
+@media (max-width: 768px) {
+
+  /* Main Container Strict Mobile Sizing */
+  .product-details {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Gallery & Image Alignment */
+  .pd-gallery {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  .pd-main-image {
+    order: 1 !important;
+    width: 100% !important;
+    max-height: 350px !important;
+    aspect-ratio: 1 / 1 !important;
+    box-sizing: border-box !important;
+  }
+
+  .pd-main-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+
+  .pd-thumbs {
+    order: 2 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Product Text & Information Info Section Fix */
+  .pd-info {
+    order: 3 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .pd-title-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .pd-desc,
+  .pd-info p,
+  .pd-info h2,
+  .pd-info span,
+  .pd-info div {
+    max-width: 100% !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Action Buttons Fix (Add to Cart / Buy Now) */
+  .pd-actions {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Delivery / Pincode Card & Form Grid Mobile Adjustment */
+  .estimated-delivery-card,
+  .auto-location,
+  .delivery-success,
+  .delivery-failed {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .pin-form {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .pin-form input,
+  .pin-form button {
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
