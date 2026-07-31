@@ -1242,30 +1242,65 @@ ul {
 }
 
 /* ---------- Responsive: Tablet & Mobile ---------- */
+/* ======================================================== */
+/* 📱 MOBILE PRODUCT DETAILS GALLERY FIX                     */
+/* ======================================================== */
+
 @media (max-width: 768px) {
+
+  /* Stack image and info vertically */
   .product-details {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
+  /* Main image on top, thumbnails directly below */
   .pd-gallery {
-    flex-direction: column-reverse;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
   }
 
+  /* Make main image full-width responsive box */
+  .pd-main-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .pd-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Change to 'contain' if full photo must be visible without crop */
+  }
+
+  /* Horizontal scrollable row for thumbnails */
   .pd-thumbs {
     flex-direction: row;
     width: 100%;
     overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 4px;
+    /* Optional: hide scrollbars while keeping touch scroll */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  .pd-thumbs::-webkit-scrollbar {
+    display: none;
+    /* Chrome / Safari / Edge */
   }
 
   .pd-thumb {
     width: 60px;
     height: 60px;
+    min-width: 60px;
+    /* Prevents thumbnails from squishing */
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
     flex-shrink: 0;
-  }
-
-  .pd-main-image {
-    aspect-ratio: 1;
-    width: 100%;
   }
 }
 
