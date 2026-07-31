@@ -101,37 +101,40 @@ const ShareMenu = ({ url, title, text, onClose }) => {
   };
 
   return (
-    <div className="share-menu-pro" onClick={(e) => e.stopPropagation()}>
-      <p className="share-menu-pro-heading">Share this product</p>
+    <>
+      <div className="share-menu-backdrop" onClick={onClose} />
+      <div className="share-menu-pro" onClick={(e) => e.stopPropagation()}>
+        <p className="share-menu-pro-heading">Share this product</p>
 
-      <div className="share-menu-pro-grid">
-        {platforms.map((p) => (
-          <button
-            key={p.name}
-            className="share-menu-pro-platform"
-            onClick={(e) => handlePlatformClick(e, p.action)}
-            type="button"
-          >
-            <span className="share-menu-pro-icon">{p.icon}</span>
-            <span className="share-menu-pro-label">{p.name}</span>
+        <div className="share-menu-pro-grid">
+          {platforms.map((p) => (
+            <button
+              key={p.name}
+              className="share-menu-pro-platform"
+              onClick={(e) => handlePlatformClick(e, p.action)}
+              type="button"
+            >
+              <span className="share-menu-pro-icon">{p.icon}</span>
+              <span className="share-menu-pro-label">{p.name}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="share-menu-pro-link-row">
+          <LinkIcon size={16} />
+          <span className="share-menu-pro-url">{url}</span>
+          <button type="button" className="share-menu-pro-copy" onClick={handleCopyLink}>
+            {copied ? <CheckIcon size={16} /> : "Copy"}
           </button>
-        ))}
-      </div>
+        </div>
 
-      <div className="share-menu-pro-link-row">
-        <LinkIcon size={16} />
-        <span className="share-menu-pro-url">{url}</span>
-        <button type="button" className="share-menu-pro-copy" onClick={handleCopyLink}>
-          {copied ? <CheckIcon size={16} /> : "Copy"}
-        </button>
+        {navigator.share && (
+          <button type="button" className="share-menu-pro-more" onClick={handleMoreOptions}>
+            <MoreIcon size={16} /> More sharing options
+          </button>
+        )}
       </div>
-
-      {navigator.share && (
-        <button type="button" className="share-menu-pro-more" onClick={handleMoreOptions}>
-          <MoreIcon size={16} /> More sharing options
-        </button>
-      )}
-    </div>
+    </>
   );
 };
 

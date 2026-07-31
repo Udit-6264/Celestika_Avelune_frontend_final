@@ -964,6 +964,64 @@ ul {
   animation: shareMenuFade 0.16s ease;
 }
 
+.share-menu-backdrop {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .share-menu-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 490;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .share-menu-pro {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    box-sizing: border-box;
+    z-index: 500;
+    max-height: 75vh;
+    overflow-y: auto;
+    animation: shareSheetUp 0.28s ease;
+    padding: 20px 16px 24px;
+  }
+
+  .share-menu-pro-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .share-menu-pro-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .share-menu-pro-label {
+    font-size: 11px;
+  }
+}
+
+@keyframes shareSheetUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes shareMenuFade {
   from {
     opacity: 0;
@@ -5013,5 +5071,95 @@ ul {
   .logo span,
   .logo-text {
     font-size: 16px !important;
+  }
+}
+
+/* ======================================================== */
+/* 📱 MOBILE FIX FOR SHARE BUTTON                           */
+/* ======================================================== */
+@media (max-width: 768px) {
+
+  /* Share container layout reset for mobile */
+  .share-container,
+  .share-button-wrapper,
+  div[class*="share"] {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: auto !important;
+    margin: 8px 0 !important;
+  }
+
+  /* Vertical Share Text Ko Hide Karein */
+  .share-text,
+  .share-container span,
+  div[class*="share"] span:not(.icon) {
+    display: none !important;
+    /* Mobile par vertical text cut hone se bachata hai */
+  }
+
+  /* Circular Pink Share Icon Button Fix */
+  .share-btn,
+  button[class*="share"] {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+/* ======================================================== */
+/* 📱 MOBILE FIX FOR PRODUCT TITLE & SHARE OVERLAY          */
+/* ======================================================== */
+@media (max-width: 768px) {
+
+  /* Title Text Alignment Fix (B U T T E R C U P B L I S S fix) */
+  .product-details h1,
+  .product-details h2,
+  .product-title {
+    writing-mode: horizontal-tb !important;
+    /* Force text to be horizontal */
+    word-break: normal !important;
+    white-space: normal !important;
+    text-orientation: mixed !important;
+    display: block !important;
+    width: 100% !important;
+    font-size: 20px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Share Container Reset for Mobile */
+  .share-container,
+  div[class*="share"] {
+    writing-mode: horizontal-tb !important;
+    display: flex !important;
+    flex-direction: row !important;
+    position: relative !important;
+    width: auto !important;
+  }
+
+  /* Hide vertical inline text in mobile view */
+  .share-container>span,
+  .share-text {
+    display: none !important;
+  }
+
+  /* Share Modal/Popup Overlay Responsiveness Fix */
+  div[class*="share"] .share-dropdown,
+  div[class*="share"] .share-menu,
+  div[class*="share-popup"] {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    max-width: 320px !important;
+    z-index: 9999 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
   }
 }
