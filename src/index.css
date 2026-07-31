@@ -4947,23 +4947,3 @@ ul {
 /* ======================================================== */
 /* 📱 MOBILE BANNER WIDTH & SPACING FIX                     */
 /* ======================================================== */
-@media (max-width: 768px) {
-  .slider {
-    width: 92% !important;
-    /* Screen edges se space chorne ke liye */
-    max-width: 380px !important;
-    /* Maximum width constraint */
-    margin: 12px auto !important;
-    /* Center align karne ke liye */
-    border-radius: 16px !important;
-    /* Rounded corners for modern look */
-    overflow: hidden !important;
-  }
-
-  .slider .slide {
-    background-size: contain !important;
-    /* Image cut hone se bachane ke liye */
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-  }
-}
