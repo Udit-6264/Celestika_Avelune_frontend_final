@@ -4696,3 +4696,26 @@ ul {
     box-sizing: border-box !important;
   }
 }
+
+/* Product Main Image Specific Fixes */
+@media (max-width: 768px) {
+  div.pd-main-image {
+    width: 100% !important;
+    height: 380px !important;
+    /* Image ki height yahan se badi hogi */
+    max-height: 400px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background: transparent !important;
+  }
+
+  div.pd-main-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    /* Photo box me poori badi fit hogi */
+    border-radius: 20px !important;
+    /* Curve corners ke liye */
+    display: block !important;
+  }
+}
