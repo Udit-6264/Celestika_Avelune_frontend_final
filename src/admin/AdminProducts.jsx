@@ -27,6 +27,7 @@ const subCategories = {
     "Knitted Flower Bouquet",
     "Artificial Flower Bouquet",
     "Rose Bouquet",
+    "Spiderman Bouquet",
     "Tulip Bouquet",
     "Lily Bouquet",
     "Mixed Flower Bouquet",

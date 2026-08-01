@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
 
-import birthday from "../assets/occasion/birthday.jpg";
-import anniversary from "../assets/occasion/anniversary.jpg";
-import wedding from "../assets/occasion/velantine.jpg";
-import valentine from "../assets/occasion/wedding.jpg";
+import birthday from "../assets/occasion/s2.jpg";
+import anniversary from "../assets/occasion/s3.jpg";
+import wedding from "../assets/occasion/s4.jpg";
+import valentine from "../assets/occasion/s1.jpg";
 
+import spiderman from "../assets/occasion/spidermen.jpg";
 const occasions = [
+  {
+    title: "Spider Man Bouquet",
+    image: spiderman,
+    subCategory: "Spiderman Bouquet",
+  },
   {
     title: "Birthday Bouquet",
     image: birthday,
@@ -26,6 +32,7 @@ const occasions = [
     image: valentine,
     subCategory: "Valentine Bouquet",
   },
+
 ];
 
 export default function FlowerOccasion() {
