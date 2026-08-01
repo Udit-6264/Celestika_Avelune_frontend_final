@@ -53,7 +53,8 @@ const Home = () => {
 
 
       {/* ✅ Girls Fashion */}
-      <section className="home-section">
+
+      {/*  <section className="home-section">
         <div className="section-header">
           <h2>👧 Girls' Fashion</h2>
           {girls.length > 0 && (
@@ -69,13 +70,15 @@ const Home = () => {
           </div>
         ) : (
           <div className="coming-soon-banner">
-            <img src={girlsBanner} alt="Girls Wear Coming Soon" />
-          </div>
-        )}
-      </section>
+            {   /*   <img src={ } alt="Girls Wear Coming Soon" /> 
+    </div>
+  )
+}
+      </section > */}
 
-      {/* ✅ Women Fashion */}
-      <section className="home-section">
+
+
+      {/*  < section className="home-section" >
         <div className="section-header">
           <h2>👗 Women's Fashion</h2>
           <Link to="/products?category=women-clothing">View All</Link>
@@ -88,8 +91,9 @@ const Home = () => {
             <p className="empty-note">No products added yet.</p>
           )}
         </div>
-      </section>
-    </div>
+      </section > */}
+
+    </div >
   );
 };
 
