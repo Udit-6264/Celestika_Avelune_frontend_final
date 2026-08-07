@@ -12,7 +12,7 @@ const AdminSettings = () => {
     api.get("/settings").then((res) => {
       setForm({
         shippingCharge: res.data.shippingCharge,
-        freeShippingThreshold: res.data.freeShippingThreshold,
+        freeShippingThreshold: res.data.freeShippingThreshold ?? "",
       });
       setLoading(false);
     });
@@ -26,11 +26,12 @@ const AdminSettings = () => {
     try {
       const { data } = await api.put("/settings", {
         shippingCharge: Number(form.shippingCharge),
-        freeShippingThreshold: Number(form.freeShippingThreshold),
+        freeShippingThreshold:
+          form.freeShippingThreshold === "" ? null : Number(form.freeShippingThreshold),
       });
       setForm({
         shippingCharge: data.shippingCharge,
-        freeShippingThreshold: data.freeShippingThreshold,
+        freeShippingThreshold: data.freeShippingThreshold ?? "",
       });
       setMsg("Settings updated successfully!");
       setTimeout(() => setMsg(""), 3000);
@@ -63,11 +64,11 @@ const AdminSettings = () => {
           </div>
 
           <div>
-            <label>Free Shipping Above (₹)</label>
+            <label>Free Shipping Above (₹) <span className="optional-tag">(optional)</span></label>
             <input
               type="number"
               min="0"
-              required
+              placeholder="Leave empty for no free shipping"
               value={form.freeShippingThreshold}
               onChange={(e) => setForm({ ...form, freeShippingThreshold: e.target.value })}
             />
@@ -75,8 +76,14 @@ const AdminSettings = () => {
         </div>
 
         <p className="settings-hint">
-          Orders above ₹{form.freeShippingThreshold || 0} get free shipping. Below that, ₹
-          {form.shippingCharge || 0} is charged.
+          {form.freeShippingThreshold === "" ? (
+            <>Free shipping is disabled. ₹{form.shippingCharge || 0} shipping is charged on every order.</>
+          ) : (
+            <>
+              Orders above ₹{form.freeShippingThreshold} get free shipping. Below that, ₹
+              {form.shippingCharge || 0} is charged.
+            </>
+          )}
         </p>
 
         <div className="form-actions">

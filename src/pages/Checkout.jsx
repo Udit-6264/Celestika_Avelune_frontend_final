@@ -75,7 +75,7 @@ const Checkout = () => {
     api.get("/settings").then((res) => {
       setShippingSettings({
         shippingCharge: res.data.shippingCharge,
-        freeShippingThreshold: res.data.freeShippingThreshold,
+        freeShippingThreshold: res.data.freeShippingThreshold ?? null,
       });
     });
   }, []);
@@ -131,8 +131,14 @@ const Checkout = () => {
     }
   };
 
+  const hasFreeShippingThreshold =
+    shippingSettings.freeShippingThreshold !== null &&
+    shippingSettings.freeShippingThreshold !== undefined;
+
   const shippingPrice =
-    itemsPrice > shippingSettings.freeShippingThreshold ? 0 : shippingSettings.shippingCharge;
+    hasFreeShippingThreshold && itemsPrice > shippingSettings.freeShippingThreshold
+      ? 0
+      : shippingSettings.shippingCharge;
   const discountAmount = appliedCoupon?.discountAmount || 0;
   const totalPrice = Math.max(itemsPrice + shippingPrice - discountAmount, 0);
 
@@ -476,20 +482,24 @@ const Checkout = () => {
             <span>{shippingPrice === 0 ? "Free" : `₹${shippingPrice}`}</span>
           </div>
 
-          {shippingPrice > 0 ? (
-            <p className="free-shipping-hint">
-              Add <b>₹{shippingSettings.freeShippingThreshold - itemsPrice}</b> more to get{" "}
-              <b>free shipping</b>
-            </p>
-          ) : (
-            <p className="free-shipping-hint free-shipping-hint-success">
-              🎉 You've unlocked free shipping!
-            </p>
+          {hasFreeShippingThreshold && (
+            shippingPrice > 0 ? (
+              <p className="free-shipping-hint">
+                Add <b>₹{shippingSettings.freeShippingThreshold - itemsPrice}</b> more to get{" "}
+                <b>free shipping</b>
+              </p>
+            ) : (
+              <p className="free-shipping-hint free-shipping-hint-success">
+                🎉 You've unlocked free shipping!
+              </p>
+            )
           )}
 
-          <p className="free-shipping-note">
-            No shipping charge above ₹{shippingSettings.freeShippingThreshold}
-          </p>
+          {hasFreeShippingThreshold && (
+            <p className="free-shipping-note">
+              No shipping charge above ₹{shippingSettings.freeShippingThreshold}
+            </p>
+          )}
 
           <div className="coupon-section">
             {!appliedCoupon ? (
