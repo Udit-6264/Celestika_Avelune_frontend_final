@@ -7,7 +7,7 @@ const Footer = () => (
     <div className="footer-v2-top">
       <div className="footer-v2-col footer-v2-brand">
         <h3> Celestika Avelune</h3>
-        <p>Fresh flowers & fashion, delivered with love — for every moment that matters.</p>
+        <p>Forever Flowers, delivered with love — for every moment that matters.</p>
         <div className="footer-v2-socials">
           <a href="https://www.instagram.com/celestika_avelune?igsh=NjQ3NWlweWF1c2ht" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <FaInstagram />
