@@ -43,25 +43,16 @@ const subCategories = {
     "Valentine Bouquet",
     "Get Well Soon Bouquet",
     "Thank You Bouquet",
-    "Baby Shower Bouquet"
+    "Baby Shower Bouquet",
+    "Rakhi" // ✅ Flowers category ke under Rakhi subcategory add ki gayi
   ],
-  "women-clothing": [
-    "Kurti",
-    "Co-ord Set",
-    "Suit Set",
-    "Dress",
-    "Top",
-    "T-Shirt",
-    "Shirt",
-    "Jeans",
-    "Palazzo",
-    "Leggings",
-    "Saree",
-    "Lehenga",
-    "Gown",
-    "Dupatta",
-    "Jacket",
-    "Sweater"
+  "Rakhi": [
+    "Designer Rakhi",
+    "Silver Rakhi",
+    "Lumba Rakhi",
+    "Kids Rakhi",
+    "Rakhi Sets",
+    "Rakhi Combos"
   ],
   "girls-clothing": [
     "Frock",
@@ -217,7 +208,7 @@ const AdminProducts = () => {
             }
           >
             <option value="flowers">Flowers</option>
-            <option value="women-clothing">Women's Clothing</option>
+            <option value="Rakhi">Rakhi</option>
             <option value="girls-clothing">Girls' Clothing</option>
           </select>
           <select
@@ -327,15 +318,13 @@ const AdminProducts = () => {
 
         <label className="upload-label">Upload Product Images:</label>
 
-        {
-          existingImages.length > 0 && (
-            <div className="existing-images-row">
-              {existingImages.map((img, i) => (
-                <img key={i} src={img} alt={`Current ${i + 1}`} className="admin-thumb" />
-              ))}
-            </div>
-          )
-        }
+        {existingImages.length > 0 && (
+          <div className="existing-images-row">
+            {existingImages.map((img, i) => (
+              <img key={i} src={img} alt={`Current ${i + 1}`} className="admin-thumb" />
+            ))}
+          </div>
+        )}
 
         <input
           type="file"
@@ -345,15 +334,13 @@ const AdminProducts = () => {
           onChange={handleImageSelect}
         />
 
-        {
-          newImagePreviews.length > 0 && (
-            <div className="existing-images-row">
-              {newImagePreviews.map((src, i) => (
-                <img key={i} src={src} alt={`New ${i + 1}`} className="admin-thumb" />
-              ))}
-            </div>
-          )
-        }
+        {newImagePreviews.length > 0 && (
+          <div className="existing-images-row">
+            {newImagePreviews.map((src, i) => (
+              <img key={i} src={src} alt={`New ${i + 1}`} className="admin-thumb" />
+            ))}
+          </div>
+        )}
 
         <div className="form-actions">
           <button type="submit" disabled={saving}>
@@ -361,17 +348,17 @@ const AdminProducts = () => {
           </button>
           {editingId && <button type="button" onClick={resetForm}>Cancel</button>}
         </div>
-      </form >
+      </form>
 
       <h3>All Products ({products.length})</h3>
       <table className="admin-table">
         <thead>
           <tr>
-            {/* ✅ Added: Product ID Column header */}
             <th>Product ID</th>
             <th>Image</th>
             <th>Name</th>
             <th>Category</th>
+            <th>SubCategory</th>
             <th>Price</th>
             <th>Stock</th>
             <th>Payment</th>
@@ -381,11 +368,11 @@ const AdminProducts = () => {
         <tbody>
           {products.map((p) => (
             <tr key={p._id}>
-              {/* ✅ Added: Product ID Data Cell */}
               <td style={{ fontSize: "12px", fontFamily: "monospace", color: "#64748b" }}>{p._id}</td>
               <td><img src={p.images && p.images[0]} alt={p.name} className="admin-thumb" /></td>
               <td>{p.name}</td>
               <td>{p.category}</td>
+              <td>{p.subCategory}</td>
               <td>₹{p.discountPrice || p.price}</td>
               <td>{p.stock}</td>
               <td>{p.codAvailable ? "Online + COD" : "Online Only"}</td>
@@ -397,7 +384,7 @@ const AdminProducts = () => {
           ))}
         </tbody>
       </table>
-    </div >
+    </div>
   );
 };
 

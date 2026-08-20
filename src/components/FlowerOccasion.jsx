@@ -4,9 +4,14 @@ import birthday from "../assets/occasion/s2.jpg";
 import anniversary from "../assets/occasion/s3.jpg";
 import wedding from "../assets/occasion/s4.jpg";
 import valentine from "../assets/occasion/s1.jpg";
-
+import Rakhi from "../assets/occasion/Rakhi.jpeg";
 import spiderman from "../assets/occasion/spidermen.jpg";
 const occasions = [
+  {
+    title: "Rakhi",
+    image: Rakhi,
+    subCategory: "Rakhi",
+  },
   {
     title: "Spider Man Bouquet",
     image: spiderman,
