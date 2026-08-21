@@ -8,14 +8,30 @@ import ComboSection from "../components/ComboSection.jsx";
 import OfferBar from "../components/OfferBar";
 import FlowerByPrice from '../components/FlowerByPrice';
 import FlowerOccasion from "../components/FlowerOccasion";
+//import ReelsSection from "../components / ReelsSection";
 const Home = () => {
   const [flowers, setFlowers] = useState([]);
+  const [rakhi, setRakhi] = useState([]);
   const [women, setWomen] = useState([]);
   const [girls, setGirls] = useState([]);
 
   useEffect(() => {
     api.get("/products?category=flowers")
-      .then((res) => setFlowers(res.data));
+      .then((res) => setFlowers(res.data.filter((p) => p.subCategory !== "Rakhi")));
+
+    // Rakhi section: dono cases cover karo —
+    // (1) Category="Flowers" + SubCategory="Rakhi"
+    // (2) standalone Category="Rakhi"
+    Promise.all([
+      api.get("/products?category=flowers&subCategory=Rakhi"),
+      api.get("/products?category=Rakhi"),
+    ]).then(([res1, res2]) => {
+      const combined = [...res1.data, ...res2.data];
+      const unique = Array.from(
+        new Map(combined.map((p) => [p._id, p])).values()
+      );
+      setRakhi(unique);
+    });
 
     api.get("/products?category=women-clothing")
       .then((res) => setWomen(res.data.slice(0, 4)));
@@ -42,6 +58,24 @@ const Home = () => {
           {flowers.length === 0 && (
             <p className="empty-note">
               No flowers added yet. Add some from the admin panel.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ✅ Rakhi Collection */}
+      <section className="home-section">
+        <div className="section-header">
+          <h2>🎊 Rakhi Collection</h2>
+          <Link to="/products?category=flowers&subcategory=Rakhi">View All</Link>
+        </div>
+        <div className="product-grid">
+          {rakhi.map((p) => (
+            <ProductCard key={p._id} product={p} />
+          ))}
+          {rakhi.length === 0 && (
+            <p className="empty-note">
+              No Rakhi products added yet. Add some from the admin panel.
             </p>
           )}
         </div>
@@ -93,6 +127,9 @@ const Home = () => {
         </div>
       </section > */}
 
+      {/* ✅ Reels Section 
+      <ReelsSection />
+*/}
     </div >
   );
 };

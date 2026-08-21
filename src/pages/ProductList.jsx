@@ -44,10 +44,16 @@ const ProductList = () => {
         : `?subCategory=${encodeURIComponent(subCategory)}`;
     }
     api.get(`/products${query}`).then((res) => {
-      setProducts(res.data);
+      let data = res.data;
+      // Rakhi products sirf apne dedicated Rakhi section/filter me dikhein,
+      // general "Flowers" listing me nahi (jab tak khud subCategory=Rakhi na chuna ho)
+      if (category === "flowers" && subCategory !== "Rakhi") {
+        data = data.filter((p) => p.subCategory !== "Rakhi");
+      }
+      setProducts(data);
       setLoading(false);
     });
-  }, [category]);
+  }, [category, subCategory]); // ✅ subCategory bhi dependency me add kiya
 
   useEffect(() => {
     let result = [...products];
