@@ -47,12 +47,8 @@ const subCategories = {
     "Rakhi" // ✅ Flowers category ke under Rakhi subcategory add ki gayi
   ],
   "Rakhi": [
-    "Designer Rakhi",
-    "Silver Rakhi",
-    "Lumba Rakhi",
-    "Kids Rakhi",
-    "Rakhi Sets",
-    "Rakhi Combos"
+    "Rakhi",
+
   ],
   "girls-clothing": [
     "Frock",
