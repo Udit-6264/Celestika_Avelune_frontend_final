@@ -39,7 +39,7 @@ const ProductDetails = () => {
 
   const images = product.images || [];
 
-  // 🆕 Video ko gallery ke aakhri "slide" ki tarah images ke saath jodo
+  // Video ko gallery ke aakhri "slide" ki tarah images ke saath jodo
   const media = [
     ...images.map((src) => ({ type: "image", src })),
     ...(product.video ? [{ type: "video", src: product.video }] : []),
@@ -106,7 +106,17 @@ const ProductDetails = () => {
             )}
 
             {activeMedia?.type === "video" ? (
-              <video src={activeMedia.src} controls playsInline />
+              <video
+                key={activeMedia.src}
+                src={activeMedia.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls={false}
+                disablePictureInPicture
+                controlsList="nodownload noplaybackrate"
+              />
             ) : (
               <img src={activeMedia?.src} alt={product.name} />
             )}
