@@ -44,11 +44,10 @@ const subCategories = {
     "Get Well Soon Bouquet",
     "Thank You Bouquet",
     "Baby Shower Bouquet",
-    "Rakhi" // ✅ Flowers category ke under Rakhi subcategory add ki gayi
+    "Rakhi"
   ],
   "Rakhi": [
     "Rakhi",
-
   ],
   "girls-clothing": [
     "Frock",
@@ -102,11 +101,17 @@ const AdminProducts = () => {
     setNewImagePreviews(files.map((f) => URL.createObjectURL(f)));
   };
 
+  // 🆕 Remove an existing (already uploaded) image
+  const handleRemoveExistingImage = (index) => {
+    setExistingImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMsg("");
 
-    if (!editingId && newImages.length === 0) {
+    // 🔧 Updated validation: check both existing (kept) + new images
+    if (existingImages.length === 0 && newImages.length === 0) {
       setMsg("Please choose at least one product image");
       return;
     }
@@ -127,6 +132,10 @@ const AdminProducts = () => {
     formData.append("isExchangeable", form.isExchangeable);
     formData.append("exchangeDays", form.exchangeDays);
     formData.append("returnPolicyNote", form.returnPolicyNote);
+
+    // 🆕 Tell backend which existing images to KEEP
+    formData.append("existingImages", JSON.stringify(existingImages));
+
     newImages.forEach((file) => formData.append("images", file));
 
     setSaving(true);
@@ -317,7 +326,33 @@ const AdminProducts = () => {
         {existingImages.length > 0 && (
           <div className="existing-images-row">
             {existingImages.map((img, i) => (
-              <img key={i} src={img} alt={`Current ${i + 1}`} className="admin-thumb" />
+              <div
+                key={img}
+                style={{ position: "relative", display: "inline-block" }}
+              >
+                <img src={img} alt={`Current ${i + 1}`} className="admin-thumb" />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveExistingImage(i)}
+                  title="Remove this image"
+                  style={{
+                    position: "absolute",
+                    top: "-6px",
+                    right: "-6px",
+                    background: "#ef4444",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    width: "20px",
+                    height: "20px",
+                    cursor: "pointer",
+                    lineHeight: "18px",
+                    fontSize: "13px",
+                  }}
+                >
+                  ×
+                </button>
+              </div>
             ))}
           </div>
         )}
