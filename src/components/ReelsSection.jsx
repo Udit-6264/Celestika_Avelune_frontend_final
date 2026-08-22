@@ -16,18 +16,18 @@ import reel10 from "../assets/reels/reel10.mp4";
 import reel11 from "../assets/reels/reel11.mp4";
 import reel12 from "../assets/reels/reel12.mp4";
 const reels = [
-  { id: 1, src: reel1, caption: "Mine 🌸" },
-  { id: 2, src: reel2, caption: "Unboxing the Combo Box 🎁" },
-  { id: 3, src: reel3, caption: "Anniversary Special 💕" },
-  { id: 4, src: reel4, caption: "Same Day Delivery 🚴" },
-  { id: 5, src: reel5, caption: "Behind the Scenes 🌸" },
-  { id: 6, src: reel6, caption: "Fresh Rose Bouquet 💐" },
-  { id: 7, src: reel7, caption: "Mine 🌸" },
-  { id: 8, src: reel8, caption: "Unboxing the Combo Box 🎁" },
-  { id: 9, src: reel9, caption: "Anniversary Special 💕" },
-  { id: 10, src: reel10, caption: "Same Day Delivery 🚴" },
-  { id: 11, src: reel11, caption: "Behind the Scenes 🌸" },
-  { id: 12, src: reel12, caption: "Fresh Rose Bouquet 💐" },
+  { id: 1, src: reel1, caption: "" },
+  { id: 2, src: reel2, caption: "" },
+  { id: 3, src: reel3, caption: "" },
+  { id: 4, src: reel4, caption: "" },
+  { id: 5, src: reel5, caption: "" },
+  { id: 6, src: reel6, caption: "" },
+  { id: 7, src: reel7, caption: "" },
+  { id: 8, src: reel8, caption: "" },
+  { id: 9, src: reel9, caption: "" },
+  { id: 10, src: reel10, caption: "" },
+  { id: 11, src: reel11, caption: "" },
+  { id: 12, src: reel12, caption: "" },
 ];
 
 const ReelCard = ({ reel }) => {
