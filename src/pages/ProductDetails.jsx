@@ -38,6 +38,13 @@ const ProductDetails = () => {
   if (!product) return <p className="page-container">Loading...</p>;
 
   const images = product.images || [];
+
+  // 🆕 Video ko gallery ke aakhri "slide" ki tarah images ke saath jodo
+  const media = [
+    ...images.map((src) => ({ type: "image", src })),
+    ...(product.video ? [{ type: "video", src: product.video }] : []),
+  ];
+
   const productUrl = window.location.href;
   const shareText = `Check out ${product.name} on Bloom & Belle`;
   const outOfStock = !product.stock || product.stock <= 0;
@@ -60,37 +67,52 @@ const ProductDetails = () => {
     navigate("/cart");
   };
 
-  const prevImage = () => setActiveImage((i) => (i === 0 ? images.length - 1 : i - 1));
-  const nextImage = () => setActiveImage((i) => (i === images.length - 1 ? 0 : i + 1));
+  const prevImage = () => setActiveImage((i) => (i === 0 ? media.length - 1 : i - 1));
+  const nextImage = () => setActiveImage((i) => (i === media.length - 1 ? 0 : i + 1));
+
+  const activeMedia = media[activeImage];
 
   return (
     <div className="page-container">
       <div className="product-details">
-        {/* Image gallery */}
+        {/* Image + Video gallery */}
         <div className="pd-gallery">
-          {images.length > 1 && (
+          {media.length > 1 && (
             <div className="pd-thumbs">
-              {images.map((img, i) => (
+              {media.map((item, i) => (
                 <button
                   key={i}
                   className={i === activeImage ? "pd-thumb active" : "pd-thumb"}
                   onClick={() => setActiveImage(i)}
                 >
-                  <img src={img} alt={`${product.name} ${i + 1}`} />
+                  {item.type === "video" ? (
+                    <div className="pd-thumb-video">
+                      <video src={item.src} muted />
+                      <span className="pd-thumb-play-icon">▶</span>
+                    </div>
+                  ) : (
+                    <img src={item.src} alt={`${product.name} ${i + 1}`} />
+                  )}
                 </button>
               ))}
             </div>
           )}
 
           <div className="pd-main-image">
-            {images.length > 1 && (
-              <button className="pd-arrow pd-arrow-left" onClick={prevImage} aria-label="Previous image">
+            {media.length > 1 && (
+              <button className="pd-arrow pd-arrow-left" onClick={prevImage} aria-label="Previous">
                 ‹
               </button>
             )}
-            <img src={images[activeImage]} alt={product.name} />
-            {images.length > 1 && (
-              <button className="pd-arrow pd-arrow-right" onClick={nextImage} aria-label="Next image">
+
+            {activeMedia?.type === "video" ? (
+              <video src={activeMedia.src} controls playsInline />
+            ) : (
+              <img src={activeMedia?.src} alt={product.name} />
+            )}
+
+            {media.length > 1 && (
+              <button className="pd-arrow pd-arrow-right" onClick={nextImage} aria-label="Next">
                 ›
               </button>
             )}
