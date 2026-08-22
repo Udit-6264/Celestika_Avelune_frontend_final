@@ -72,12 +72,22 @@ const AdminProducts = () => {
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
+
+  // ---- Images ----
   const [existingImages, setExistingImages] = useState([]);
   const [newImages, setNewImages] = useState([]);
   const [newImagePreviews, setNewImagePreviews] = useState([]);
+
+  // ---- Video ----
+  const [existingVideo, setExistingVideo] = useState(""); // current video URL from DB
+  const [removeVideo, setRemoveVideo] = useState(false);  // admin removed existing video
+  const [newVideo, setNewVideo] = useState(null);
+  const [newVideoPreview, setNewVideoPreview] = useState("");
+
   const [msg, setMsg] = useState("");
   const [saving, setSaving] = useState(false);
   const fileInputRef = useRef(null);
+  const videoInputRef = useRef(null);
 
   const loadProducts = () => api.get("/products").then((res) => setProducts(res.data));
 
@@ -88,11 +98,19 @@ const AdminProducts = () => {
   const resetForm = () => {
     setForm(emptyForm);
     setEditingId(null);
+
     setExistingImages([]);
     newImagePreviews.forEach((url) => URL.revokeObjectURL(url));
     setNewImages([]);
     setNewImagePreviews([]);
     if (fileInputRef.current) fileInputRef.current.value = "";
+
+    setExistingVideo("");
+    setRemoveVideo(false);
+    if (newVideoPreview) URL.revokeObjectURL(newVideoPreview);
+    setNewVideo(null);
+    setNewVideoPreview("");
+    if (videoInputRef.current) videoInputRef.current.value = "";
   };
 
   const handleImageSelect = (e) => {
@@ -101,16 +119,34 @@ const AdminProducts = () => {
     setNewImagePreviews(files.map((f) => URL.createObjectURL(f)));
   };
 
-  // 🆕 Remove an existing (already uploaded) image
   const handleRemoveExistingImage = (index) => {
     setExistingImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleVideoSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setNewVideo(file);
+    setNewVideoPreview(URL.createObjectURL(file));
+    setRemoveVideo(false);
+  };
+
+  const handleRemoveNewVideo = () => {
+    if (newVideoPreview) URL.revokeObjectURL(newVideoPreview);
+    setNewVideo(null);
+    setNewVideoPreview("");
+    if (videoInputRef.current) videoInputRef.current.value = "";
+  };
+
+  const handleRemoveExistingVideo = () => {
+    setExistingVideo("");
+    setRemoveVideo(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMsg("");
 
-    // 🔧 Updated validation: check both existing (kept) + new images
     if (existingImages.length === 0 && newImages.length === 0) {
       setMsg("Please choose at least one product image");
       return;
@@ -133,10 +169,16 @@ const AdminProducts = () => {
     formData.append("exchangeDays", form.exchangeDays);
     formData.append("returnPolicyNote", form.returnPolicyNote);
 
-    // 🆕 Tell backend which existing images to KEEP
     formData.append("existingImages", JSON.stringify(existingImages));
-
     newImages.forEach((file) => formData.append("images", file));
+
+    // Video fields
+    if (newVideo) {
+      formData.append("video", newVideo);
+    }
+    if (removeVideo) {
+      formData.append("removeVideo", "true");
+    }
 
     setSaving(true);
     try {
@@ -179,11 +221,20 @@ const AdminProducts = () => {
       exchangeDays: p.returnPolicy?.exchangeDays ?? 7,
       returnPolicyNote: p.returnPolicy?.note || "",
     });
+
     setExistingImages(p.images || []);
     newImagePreviews.forEach((url) => URL.revokeObjectURL(url));
     setNewImages([]);
     setNewImagePreviews([]);
     if (fileInputRef.current) fileInputRef.current.value = "";
+
+    setExistingVideo(p.video || "");
+    setRemoveVideo(false);
+    if (newVideoPreview) URL.revokeObjectURL(newVideoPreview);
+    setNewVideo(null);
+    setNewVideoPreview("");
+    if (videoInputRef.current) videoInputRef.current.value = "";
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -321,15 +372,13 @@ const AdminProducts = () => {
 
         <textarea placeholder="Description" required rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
 
-        <label className="upload-label">Upload Product Images:</label>
+        {/* ================= IMAGES ================= */}
+        <label className="upload-label">Product Images:</label>
 
         {existingImages.length > 0 && (
           <div className="existing-images-row">
             {existingImages.map((img, i) => (
-              <div
-                key={img}
-                style={{ position: "relative", display: "inline-block" }}
-              >
+              <div key={img} style={{ position: "relative", display: "inline-block" }}>
                 <img src={img} alt={`Current ${i + 1}`} className="admin-thumb" />
                 <button
                   type="button"
@@ -370,6 +419,44 @@ const AdminProducts = () => {
             {newImagePreviews.map((src, i) => (
               <img key={i} src={src} alt={`New ${i + 1}`} className="admin-thumb" />
             ))}
+          </div>
+        )}
+
+        {/* ================= VIDEO ================= */}
+        <label className="upload-label">Product Video (optional):</label>
+
+        {existingVideo && !removeVideo && (
+          <div style={{ marginBottom: "10px" }}>
+            <video src={existingVideo} controls width="220" />
+            <button
+              type="button"
+              onClick={handleRemoveExistingVideo}
+              className="danger-btn"
+              style={{ display: "block", marginTop: "6px" }}
+            >
+              Remove Video
+            </button>
+          </div>
+        )}
+
+        <input
+          type="file"
+          accept="video/mp4,video/webm,video/quicktime"
+          ref={videoInputRef}
+          onChange={handleVideoSelect}
+        />
+
+        {newVideoPreview && (
+          <div style={{ marginTop: "10px" }}>
+            <video src={newVideoPreview} controls width="220" />
+            <button
+              type="button"
+              onClick={handleRemoveNewVideo}
+              className="danger-btn"
+              style={{ display: "block", marginTop: "6px" }}
+            >
+              Cancel New Video
+            </button>
           </div>
         )}
 
