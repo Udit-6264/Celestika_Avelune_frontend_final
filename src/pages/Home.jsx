@@ -8,7 +8,7 @@ import ComboSection from "../components/ComboSection.jsx";
 import OfferBar from "../components/OfferBar";
 import FlowerByPrice from '../components/FlowerByPrice';
 import FlowerOccasion from "../components/FlowerOccasion";
-//import ReelsSection from "../components / ReelsSection";
+import ReelsSection from "../components/ReelsSection";
 const Home = () => {
   const [flowers, setFlowers] = useState([]);
   const [rakhi, setRakhi] = useState([]);
@@ -127,9 +127,9 @@ const Home = () => {
         </div>
       </section > */}
 
-      {/* ✅ Reels Section 
+      {/* ✅ Reels Section */}
       <ReelsSection />
-*/}
+
     </div >
   );
 };
