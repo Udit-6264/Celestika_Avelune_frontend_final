@@ -22,6 +22,12 @@ const reels = [
   { id: 4, src: reel4, caption: "Same Day Delivery 🚴" },
   { id: 5, src: reel5, caption: "Behind the Scenes 🌸" },
   { id: 6, src: reel6, caption: "Fresh Rose Bouquet 💐" },
+  { id: 7, src: reel1, caption: "Mine 🌸" },
+  { id: 8, src: reel2, caption: "Unboxing the Combo Box 🎁" },
+  { id: 9, src: reel3, caption: "Anniversary Special 💕" },
+  { id: 10, src: reel4, caption: "Same Day Delivery 🚴" },
+  { id: 11, src: reel5, caption: "Behind the Scenes 🌸" },
+  { id: 12, src: reel6, caption: "Fresh Rose Bouquet 💐" },
 ];
 
 const ReelCard = ({ reel }) => {
