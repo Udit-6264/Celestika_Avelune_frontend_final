@@ -4,18 +4,24 @@ import { FaPlay, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 // 👉 Apni reel video files yahin daalo: src/assets/reels/
 // File names match karo ya neeche import + list update kar do.
 import reel1 from "../assets/reels/reel1.mp4";
-import reel2 from "../assets/reels/reel1.mp4";
-import reel3 from "../assets/reels/reel1.mp4";
-import reel4 from "../assets/reels/reel1.mp4";
-import reel5 from "../assets/reels/reel1.mp4";
-import reel6 from "../assets/reels/reel1.mp4";
+import reel2 from "../assets/reels/reel2.mp4";
+import reel3 from "../assets/reels/reel3.mp4";
+import reel4 from "../assets/reels/reel4.mp4";
+import reel5 from "../assets/reels/reel5.mp4";
+import reel6 from "../assets/reels/reel6.mp4";
+import reel7 from "../assets/reels/reel7.mp4";
+import reel8 from "../assets/reels/reel8.mp4";
+import reel9 from "../assets/reels/reel9.mp4";
+import reel10 from "../assets/reels/reel10.mp4";
+import reel11 from "../assets/reels/reel11.mp4";
+import reel12 from "../assets/reels/reel12.mp4";
 const reels = [
-  { id: 1, src: reel1, caption: "Fresh Rose Bouquet 💐" },
+  { id: 1, src: reel1, caption: "Mine 🌸" },
   { id: 2, src: reel2, caption: "Unboxing the Combo Box 🎁" },
   { id: 3, src: reel3, caption: "Anniversary Special 💕" },
   { id: 4, src: reel4, caption: "Same Day Delivery 🚴" },
   { id: 5, src: reel5, caption: "Behind the Scenes 🌸" },
-  { id: 6, src: reel6, caption: "Mine 🌸" },
+  { id: 6, src: reel6, caption: "Fresh Rose Bouquet 💐" },
 ];
 
 const ReelCard = ({ reel }) => {
